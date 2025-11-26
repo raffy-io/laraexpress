@@ -1,4 +1,4 @@
-import Welcome from "../Models/WelcomeModel.js";
+import Welcome from "../../Models/WelcomeModel.js";
 
 export default class WelcomeController {
   async index(req, res) {

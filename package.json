@@ -6,6 +6,9 @@
   "scripts": {
     "dev": "node tools/dev-runner.js"
   },
+  "bin": {
+    "lara": "./app/Core/lara/lara.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Astenos15/laraexpress-v2.git"
@@ -21,6 +24,7 @@
   "dependencies": {
     "@tailwindcss/cli": "^4.1.17",
     "browser-sync": "^3.0.4",
+    "commander": "^14.0.2",
     "dotenv": "^17.2.3",
     "edge.js": "^6.3.0",
     "express": "^5.1.0",
