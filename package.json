@@ -4,7 +4,7 @@
   "main": "app.js.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "node tools/dev-runner.js"
   },
   "repository": {
     "type": "git",
@@ -17,5 +17,18 @@
     "url": "https://github.com/Astenos15/laraexpress-v2/issues"
   },
   "homepage": "https://github.com/Astenos15/laraexpress-v2#readme",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "@tailwindcss/cli": "^4.1.17",
+    "browser-sync": "^3.0.4",
+    "dotenv": "^17.2.3",
+    "edge.js": "^6.3.0",
+    "express": "^5.1.0",
+    "pg-promise": "^12.3.0",
+    "tailwindcss": "^4.1.17"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1",
+    "nodemon": "^3.1.11"
+  }
 }

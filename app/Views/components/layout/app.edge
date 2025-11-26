@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/output.css" />
+    <title>{{ title || "your default title" }}</title>
+  </head>
+  <body class="h-screen grid grid-rows-[auto_1fr_auto] bg-black text-white">
+    <header></header>
+    <main>{{{ await $slots.main() }}}</main>
+    <footer></footer>
+    <!-- include. in development only for browser reload -->
+    @include('partials/browser-sync')
+  </body>
+</html>

@@ -1,0 +1,24 @@
+@layout.app({ title: "Welcome to LaraExpress" })
+<!-- prettier-ignore -->
+@slot('main')
+<section class="grid place-items-center h-full">
+  <div class="flex flex-col justify-center items-center">
+    <h1
+      class="lg:text-8xl font-black capitalize mb-4 bg-linear-to-r from-cyan-500 to-pink-500 text-transparent bg-clip-text text-animation"
+    >
+      {{ data.heading }}
+    </h1>
+    <p class="capitalize mb-4 lg:text-lg font-light">
+      {{ data.subheading }}
+    </p>
+    <a
+      href="/"
+      class="flex justify-center items-center py-1 px-6 bg-red-500 text-red-50 capitalize text-lg"
+      >learn more</a
+    >
+  </div>
+</section>
+<!-- prettier-ignore -->
+@endslot
+<!-- prettier-ignore -->
+@end
