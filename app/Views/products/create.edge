@@ -1,0 +1,36 @@
+@layout.app({ title: "Create Product Page" })
+<!-- prettier-ignore -->
+@slot('main')
+<section class="grid place-items-center h-full">
+  <form
+    action="/products"
+    method="POST"
+    class="bg-white text-gray-700 lg:w-1/3 lg:p-4 flex flex-col gap-6"
+  >
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}" />
+
+    <h1 class="font-bold capitalize lg:text-2xl">add product</h1>
+    <div class="flex flex-col gap-2">
+      <label for="product_name" class="capitalize font-semibold"
+        >product name</label
+      >
+      <input type="text" name="product_name" class="bg-gray-200" />
+    </div>
+    <div class="flex flex-col gap-2">
+      <label for="product_price" class="capitalize font-semibold"
+        >product price</label
+      >
+      <input type="text" name="product_price" class="bg-gray-200" />
+    </div>
+    <button
+      type="submit"
+      class="cursor-pointer flex items-center justify-center capitalize bg-gray-900 text-gray-50 py-1"
+    >
+      add
+    </button>
+  </form>
+</section>
+<!-- prettier-ignore -->
+@endslot
+<!-- prettier-ignore -->
+@end

@@ -1,18 +1,17 @@
 import BaseController from "../../Core/controller/BaseController.js";
-  
-  export default class ProductController extends BaseController {
-  
+
+export default class ProductController extends BaseController {
   index() {
-    this.send("Index method");
+    this.view("products/index");
   }
   show() {
     this.send("Show method");
   }
   create() {
-    this.send("Create method");
+    this.view("products/create");
   }
   store() {
-    this.send("Store method");
+    dd(this.req.body, this.res);
   }
   update() {
     this.send("Update method");

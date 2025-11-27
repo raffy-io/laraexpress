@@ -8,5 +8,7 @@ const router = express.Router();
 router.get("/", controllerAction(WelcomeController, "index"));
 
 router.get("/products", controllerAction(ProductController, "index"));
+router.get("/products/create", controllerAction(ProductController, "create"));
+router.post("/products", controllerAction(ProductController, "store"));
 
 export default router;

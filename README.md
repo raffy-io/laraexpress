@@ -2,7 +2,7 @@
 
 # LaraExpress Mini-Framework
 
-(..Still in development stage)
+(In Development Stage)
 
 A lightweight Node.js + Express + Edge.js framework inspired by Laravel, designed for quick SSR projects with a familiar Blade-like syntax and clean MVC structure.
 
@@ -23,7 +23,7 @@ A lightweight Node.js + Express + Edge.js framework inspired by Laravel, designe
 ```bash
 laraexpress/
 ├── app/       # MVC logic: controllers, models, routes, view
-├── config/    # Configuration (DB, settings)
+├── config/    # Configuration (database connection, settings)
 ├── database/  # migrations
 ├── public/    # Compiled assets (ignored in git, kept with .gitkeep)
 ├── src/       # Source files: Tailwind input CSS, JS modules

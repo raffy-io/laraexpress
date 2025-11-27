@@ -1,3 +1,4 @@
+import "./app/Core/bootstrap.js";
 import express from "express";
 import { Edge } from "edge.js";
 import path from "path";
