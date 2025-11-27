@@ -10,6 +10,7 @@ program.version("1.0.0");
 // --- CONTROLLER HELPER ---
 function createController(name) {
   if (!name) return console.log("Please provide a controller name!");
+  const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
 
   const controllerName = name.endsWith("Controller")
     ? name
@@ -19,15 +20,17 @@ function createController(name) {
     "app",
     "Http",
     "Controllers",
-    `${controllerName}.js`
+    `${capitalize(controllerName)}.js`
   );
 
   if (fs.existsSync(filePath))
-    return console.log(`Controller ${controllerName} already exists!`);
+    return console.log(
+      `Controller ${capitalize(controllerName)} already exists!`
+    );
 
   const content = `import BaseController from "../../Core/controller/BaseController.js";
   
-  export default class ${controllerName} extends BaseController {
+  export default class ${capitalize(controllerName)} extends BaseController {
   
   index() {
     this.send("Index method");
@@ -59,25 +62,29 @@ function createController(name) {
 function createModel(name) {
   if (!name) return console.log("Please provide a model name!");
 
-  const modelName = name.endsWith("Model") ? name : `${name}Model`;
-  const filePath = path.join(process.cwd(), "app", "Models", `${modelName}.js`);
+  const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
+  const modelName = name.endsWith("Model") ? name : `${name}`;
+  const filePath = path.join(
+    process.cwd(),
+    "app",
+    "Models",
+    `${capitalize(modelName)}.js`
+  );
 
   if (fs.existsSync(filePath))
-    return console.log(`Model ${modelName} already exists!`);
+    return console.log(`Model ${capitalize(modelName)} already exists!`);
 
-  const content = `export default class ${modelName} {
+  const content = `import BaseModel from "../Core/model/BaseModel.js";
+
+class ${capitalize(modelName)} extends BaseModel {
   constructor() {
-    // Define your properties here
+    super("${modelName.toLowerCase()}s"); // table name
   }
 
-  find(id) {
-    // Fetch a record by id
-  }
-
-  all() {
-    // Fetch all records
-  }
+  static table = "${modelName.toLowerCase()}s";
 }
+
+export default ${capitalize(modelName)};
 `;
 
   fs.mkdirSync(path.dirname(filePath), { recursive: true });

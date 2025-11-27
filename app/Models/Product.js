@@ -1,10 +1,11 @@
-import BaseModel from "../Core/model/BaseModel";
+import BaseModel from "../Core/model/BaseModel.js";
 
 class Product extends BaseModel {
   constructor() {
-    // Define your properties here
-    super("products");
+    super("products"); // table name
   }
+
+  static table = "products";
 }
 
 export default Product;
