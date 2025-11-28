@@ -33,4 +33,8 @@ export default class BaseModel {
   paginate(page = 1, perPage = 10) {
     return db.any(Queries.paginate(this.table, page, perPage));
   }
+
+  static create(data) {
+    return new this().create(data);
+  }
 }

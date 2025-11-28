@@ -1,4 +1,4 @@
-global.dd = (data, res) => {
+global.dd = (res, data) => {
   const output = JSON.stringify(data, null, 2);
   if (res) {
     res.status(200).send(`

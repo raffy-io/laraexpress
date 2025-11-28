@@ -30,6 +30,7 @@
     "dotenv": "^17.2.3",
     "edge.js": "^6.3.0",
     "express": "^5.1.0",
+    "express-validator": "^7.3.1",
     "method-override": "^3.0.0",
     "pg-promise": "^12.3.0",
     "tailwindcss": "^4.1.17"

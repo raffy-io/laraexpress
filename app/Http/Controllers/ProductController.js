@@ -10,8 +10,20 @@ export default class ProductController extends BaseController {
   create() {
     this.view("products/create");
   }
-  store() {
-    dd(this.req.body, this.res);
+  async store() {
+    try {
+      const data = await this.validate({
+        product_name: "required|min:3",
+        product_price: "required",
+      });
+
+      this.dd(data);
+    } catch (error) {
+      return this.view("products/create", {
+        old: this.req.body,
+        error: error.validation,
+      });
+    }
   }
   update() {
     this.send("Update method");
