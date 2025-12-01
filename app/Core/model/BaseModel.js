@@ -29,6 +29,24 @@ export default class BaseModel {
     return db.one(query, values);
   }
 
+  async update(id, data) {
+    const columns = Object.keys(data);
+    const values = Object.values(data);
+
+    const sets = columns.map((col, i) => `${col} = $${i + 1}`);
+
+    // Add id as last parameter
+    values.push(id);
+
+    const query = `
+    UPDATE ${this.table}
+    SET ${sets.join(",")}
+    WHERE id = $${values.length}
+  `;
+
+    return db.none(query, values);
+  }
+
   delete(id) {
     return db.none(`DELETE FROM ${this.table} WHERE id = $1`, [id]);
   }
@@ -47,5 +65,9 @@ export default class BaseModel {
 
   static delete(id) {
     return new this().delete(id);
+  }
+
+  static update(id, data) {
+    return new this().update(id, data);
   }
 }

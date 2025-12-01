@@ -8,7 +8,11 @@ export default class ProductController extends BaseController {
   }
   async show() {
     const product = await Product.find(Number(this.req.params.id));
-    if (!product) return this.notFound("Product not found", "/products");
+    if (!product)
+      return this.notFound(
+        "Product not found or might be deleted.",
+        "/products"
+      );
     return this.view("products/show", { product });
   }
 
@@ -41,8 +45,42 @@ export default class ProductController extends BaseController {
     }
   }
 
+  async edit() {
+    const id = Number(this.req.params.id);
+    const product = await Product.find(id);
+    if (!product)
+      return this.notFound(
+        "Product not found or might be deleted.",
+        "/products"
+      );
+    return this.view(`products/edit`, { product });
+  }
+
   async update() {
-    return this.send("Update method");
+    try {
+      const id = Number(this.req.params.id);
+
+      // Always validate
+      const data = await this.validate({
+        product_name: "required|min:3",
+        product_price: "required|numeric",
+      });
+
+      // Your update logic
+      Product.update(id, {
+        product_name: data.product_name,
+        product_price: data.product_price,
+      });
+
+      // Redirect user
+      return this.redirect("/products");
+    } catch (error) {
+      // return to form with old values and errors
+      return this.view("products/create", {
+        old: this.req.body,
+        error: error.validation,
+      });
+    }
   }
 
   async destroy() {

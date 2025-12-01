@@ -12,6 +12,7 @@ router.get("/products/create", controllerAction(ProductController, "create"));
 router.post("/products", controllerAction(ProductController, "store"));
 router.get("/products/edit/:id", controllerAction(ProductController, "edit"));
 router.get("/products/:id", controllerAction(ProductController, "show"));
+router.put("/products/:id", controllerAction(ProductController, "update"));
 router.delete("/products/:id", controllerAction(ProductController, "destroy"));
 
 export default router;
