@@ -13,15 +13,20 @@
       >
       <div class="flex items-center justify-center gap-2">
         <a
-          href=""
+          href="/products/edit/{{ product.id }}"
           class="flex items-center justify-center px-4 py-1 capitalize bg-teal-500"
           >edit</a
         >
-        <button
-          class="flex items-center justify-center px-4 py-1 capitalize bg-red-500"
-        >
-          delete
-        </button>
+
+        <form action="/products/{{ product.id }}?_method=DELETE" method="POST">
+          <input type="hidden" name="_csrf" value="{{ csrfToken }}" />
+          <button
+            type="submit"
+            class="cursor-pointer flex items-center justify-center px-4 py-1 capitalize bg-red-500"
+          >
+            delete
+          </button>
+        </form>
       </div>
     </div>
   </div>

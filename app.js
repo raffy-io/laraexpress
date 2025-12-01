@@ -39,13 +39,13 @@ app.engine("edge", async (filePath, data, callback) => {
 
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
+app.use(methodOverride("_method"));
 app.use(cookieParser());
 app.use(verifyCsurf);
 app.use((req, res, next) => {
   res.locals.csrfToken = req.csrfToken ? req.csrfToken() : "";
   next();
 });
-app.use(methodOverride("_method"));
 
 app.use("/", routes);
 

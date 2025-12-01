@@ -29,6 +29,10 @@ export default class BaseModel {
     return db.one(query, values);
   }
 
+  delete(id) {
+    return db.none(`DELETE FROM ${this.table} WHERE id = $1`, [id]);
+  }
+
   static all() {
     return new this().all();
   }
@@ -39,5 +43,9 @@ export default class BaseModel {
 
   static create(data) {
     return new this().create(data);
+  }
+
+  static delete(id) {
+    return new this().delete(id);
   }
 }

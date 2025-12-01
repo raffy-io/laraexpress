@@ -13,7 +13,7 @@ export default class ProductController extends BaseController {
   }
 
   async create() {
-    this.view("products/create");
+    return this.view("products/create");
   }
 
   async store() {
@@ -42,10 +42,12 @@ export default class ProductController extends BaseController {
   }
 
   async update() {
-    this.send("Update method");
+    return this.send("Update method");
   }
 
   async destroy() {
-    this.send("Destroy method");
+    const id = Number(this.req.params.id);
+    await Product.delete(id);
+    return this.redirect("/products");
   }
 }
