@@ -10,6 +10,8 @@ const verifyCsurf = (req, res, next) => {
           code: 403,
           title: "Forbidden",
           message: "Your session has expired. Please refresh and try again.",
+          backUrl: "/",
+          backMessage: "Go Back Home",
         });
       }
       return next(err);

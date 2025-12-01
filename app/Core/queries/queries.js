@@ -1,6 +1,6 @@
 // queries.js
 export const Queries = {
-  all: (table) => `SELECT * FROM ${table} WHERE deleted_at IS NULL`,
+  all: (table) => `SELECT * FROM ${table}`,
   find: (table) => (id) =>
     `SELECT * FROM ${table} WHERE id = ${id} AND deleted_at IS NULL`,
   create: (table, data) => {

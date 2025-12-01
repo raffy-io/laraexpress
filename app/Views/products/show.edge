@@ -1,0 +1,19 @@
+@layout.app({ title: "Example Products Page" })
+<!-- prettier-ignore -->
+@slot('main')
+<section class="grid place-items-center h-full">
+  <div
+    class="flex flex-col justify-center items-center"
+    x-data="{ shown: false }"
+    x-intersect="shown = true"
+  >
+    <div>
+      <h2>{{ product.product_name }}</h2>
+      <p>{{ product.product_price }}</p>
+    </div>
+  </div>
+</section>
+<!-- prettier-ignore -->
+@endslot
+<!-- prettier-ignore -->
+@end

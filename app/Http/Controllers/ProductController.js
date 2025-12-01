@@ -2,15 +2,30 @@ import BaseController from "../../Core/controller/BaseController.js";
 import Product from "../../Models/Product.js";
 
 export default class ProductController extends BaseController {
-  index() {
-    this.view("products/index");
+  async index() {
+    const products = await Product.all();
+    return this.view("products/index", { products });
   }
-  show() {
-    this.send("Show method");
+  async show() {
+    const product = await Product.find(Number(this.req.params.id));
+
+    if (!product) {
+      return this.view("errors/error", {
+        code: 404,
+        title: "Not Found",
+        message: "Product not found or might be deleted..",
+        backUrl: "/products",
+        backMessage: "Go Back",
+      });
+    }
+
+    return this.view("products/show", { product });
   }
+
   create() {
     this.view("products/create");
   }
+
   async store() {
     try {
       // Always validate
@@ -26,7 +41,7 @@ export default class ProductController extends BaseController {
       });
 
       // Redirect user
-      this.redirect("/products");
+      return this.redirect("/products");
     } catch (error) {
       // return to form with old values and errors
       return this.view("products/create", {
@@ -35,9 +50,11 @@ export default class ProductController extends BaseController {
       });
     }
   }
+
   update() {
     this.send("Update method");
   }
+
   destroy() {
     this.send("Destroy method");
   }

@@ -1,37 +1,40 @@
 import db from "../../../config/db.js";
-import { Queries } from "../queries/queries.js";
+
+const allowedTables = ["users", "products"]; // whitelist
 
 export default class BaseModel {
   constructor(table) {
+    if (!allowedTables.includes(table)) {
+      throw new Error(`Invalid table name: ${table}`);
+    }
     this.table = table;
   }
 
   all() {
-    return db.any(Queries.all(this.table));
+    return db.any(`SELECT * FROM ${this.table}`);
   }
 
   find(id) {
-    return db.oneOrNone(Queries.find(this.table)(id));
+    return db.oneOrNone(`SELECT * FROM ${this.table} WHERE id = $1`, [id]);
   }
 
   create(data) {
-    return db.one(Queries.create(this.table, data));
+    const columns = Object.keys(data);
+    const values = Object.values(data);
+    const placeholders = values.map((_, i) => `$${i + 1}`).join(", ");
+
+    const query = `INSERT INTO ${this.table} (${columns.join(
+      ", "
+    )}) VALUES (${placeholders}) RETURNING *`;
+    return db.one(query, values);
   }
 
-  update(id, data) {
-    return db.one(Queries.update(this.table, id, data));
+  static all() {
+    return new this().all();
   }
 
-  delete(id) {
-    return db.none(Queries.delete(this.table, id));
-  }
-
-  softDelete(id) {
-    return db.one(Queries.softDelete(this.table, id));
-  }
-
-  paginate(page = 1, perPage = 10) {
-    return db.any(Queries.paginate(this.table, page, perPage));
+  static find(id) {
+    return new this().find(id);
   }
 
   static create(data) {

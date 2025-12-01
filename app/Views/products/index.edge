@@ -7,13 +7,22 @@
     x-data="{ shown: false }"
     x-intersect="shown = true"
   >
-    <h1
-      class="lg:text-8xl font-black capitalize mb-4 bg-linear-to-r from-cyan-500 to-pink-500 text-transparent bg-clip-text text-animation"
-      x-show="shown"
-      x-transition.opacity.duration.2000ms
-    >
-      No products yet...
-    </h1>
+    <ul class="flex flex-col gap-2">
+      <!-- prettier-ignore -->
+      @each(product in products)
+      <li>
+        <a
+          href="/products/{{ product.id }}"
+          class="flex items-center justify-center px-4 py-1 bg-red-500 capitalize"
+          >{{ product.product_name }}</a
+        >
+      </li>
+      <!-- prettier-ignore -->
+      @else
+      <p>No products yet...</p>
+      <!-- prettier-ignore -->
+      @end
+    </ul>
   </div>
 </section>
 <!-- prettier-ignore -->

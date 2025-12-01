@@ -55,6 +55,8 @@ app.use((req, res) => {
     code: 404,
     title: "Not Found",
     message: "Oops! The page you are looking for does not exist.",
+    backUrl: "/",
+    backMessage: "Go Back Home",
   });
 });
 
@@ -64,6 +66,8 @@ app.use((err, req, res, next) => {
     code: 500,
     title: "Server Error",
     message: "Something went wrong. Please try again later.",
+    backUrl: "/",
+    backMessage: "Go Back Home",
   });
 });
 

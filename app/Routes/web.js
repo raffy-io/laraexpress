@@ -10,5 +10,6 @@ router.get("/", controllerAction(WelcomeController, "index"));
 router.get("/products", controllerAction(ProductController, "index"));
 router.get("/products/create", controllerAction(ProductController, "create"));
 router.post("/products", controllerAction(ProductController, "store"));
+router.get("/products/:id", controllerAction(ProductController, "show"));
 
 export default router;
