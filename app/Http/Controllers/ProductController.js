@@ -1,5 +1,8 @@
 import BaseController from "../../Core/controller/BaseController.js";
 import Product from "../../Models/Product.js";
+import { nanoid } from "nanoid";
+import path from "path";
+import fs from "fs";
 
 export default class ProductController extends BaseController {
   async index() {
@@ -19,29 +22,47 @@ export default class ProductController extends BaseController {
   async create() {
     return this.view("products/create");
   }
-
   async store() {
     try {
-      // Always validate
+      // 1. Always validate text inputs first
       const data = await this.validate({
+        product_image: "image",
         product_name: "required|min:3",
         product_price: "required|numeric",
       });
 
-      // Your store logic
-      await Product.create({
-        product_name: data.product_name,
-        product_price: data.product_price,
-      });
+      // 2. Access uploaded file safely
+      const file = this.req.files?.[0] || null;
 
-      // Redirect user
+      // 3. Save file only when exists
+      if (file) {
+        const filename =
+          file.fieldname + "-" + nanoid() + "-" + file.originalname;
+
+        const uploadPath = path.join(process.cwd(), "public/uploads", filename);
+
+        // Write to disk (manually)
+        fs.writeFileSync(uploadPath, file.buffer);
+
+        // Store public path in DB
+        data.product_image = "/uploads/" + filename;
+      }
+
+      // 4. Just log the final data
+      console.log(data);
+
+      // 5. Insert into DB
+      await Product.create(data);
+
+      // 6. Redirect
       return this.redirect("/products");
     } catch (error) {
-      // return to form with old values and errors
       return this.view("products/create", {
         old: this.req.body,
         error: error.validation,
       });
+      // console.log("❌ CATCH ERROR:", error);
+      // throw error;
     }
   }
 
@@ -62,15 +83,30 @@ export default class ProductController extends BaseController {
 
       // Always validate
       const data = await this.validate({
+        product_image: "image",
         product_name: "required|min:3",
         product_price: "required|numeric",
       });
 
+      // 2. Access uploaded file safely
+      const file = this.req.files?.[0] || null;
+
+      // 3. Save file only when exists
+      if (file) {
+        const filename =
+          file.fieldname + "-" + nanoid() + "-" + file.originalname;
+
+        const uploadPath = path.join(process.cwd(), "public/uploads", filename);
+
+        // Write to disk (manually)
+        fs.writeFileSync(uploadPath, file.buffer);
+
+        // Store public path in DB
+        data.product_image = "/uploads/" + filename;
+      }
+
       // Your update logic
-      Product.update(id, {
-        product_name: data.product_name,
-        product_price: data.product_price,
-      });
+      Product.update(id, data);
 
       // Redirect user
       return this.redirect("/products");
@@ -80,6 +116,8 @@ export default class ProductController extends BaseController {
         old: this.req.body,
         error: error.validation,
       });
+      // console.log("❌ CATCH ERROR:", error);
+      // throw error;
     }
   }
 

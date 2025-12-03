@@ -3,6 +3,9 @@
 @slot('main')
 <section class="grid place-items-center h-full">
   <div class="lg:w-1/3 flex flex-col">
+    <div>
+      <img src="{{ product.product_image }}" alt="" />
+    </div>
     <h2 class="text-xl capitalize">{{ product.product_name }}</h2>
     <p class="mb-4">{{ product.product_price }}</p>
     <div class="flex items-center justify-between">

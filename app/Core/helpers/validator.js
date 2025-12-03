@@ -80,6 +80,37 @@ const validate = async (req, rules, defaultValues = {}) => {
           })
         );
       }
+
+      if (rule === "image") {
+        validators.push(
+          body(field).custom((value, { req }) => {
+            const allowed = [
+              "image/jpeg",
+              "image/png",
+              "image/webp",
+              "image/gif",
+              "image/jpg",
+            ];
+
+            const image = req.files ? req.files[0] : null;
+
+            if (!image) {
+              throw new Error(`${pretty(field)} is required`);
+            }
+
+            if (!allowed.includes(image.mimetype)) {
+              throw new Error(
+                `${pretty(
+                  field
+                )} must be valid image type (jpg, jpeg, png, webp, gif)`
+              );
+            }
+
+            // ✅ Explicitly return true if validation passes
+            return true;
+          })
+        );
+      }
     }
   }
 

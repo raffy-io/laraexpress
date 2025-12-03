@@ -7,6 +7,8 @@ import routes from "./app/Routes/web.js";
 import cookieParser from "cookie-parser";
 import verifyCsurf from "./app/Core/middleware/csrf.js";
 import methodOverride from "method-override";
+import multerMiddleware from "./app/Core/middleware/multer.js";
+import csrfToken from "./app/Core/middleware/csrfToken.js";
 
 const app = express();
 const port = process.env.PORT || 8080;
@@ -41,11 +43,9 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.use(cookieParser());
+app.use(multerMiddleware);
 app.use(verifyCsurf);
-app.use((req, res, next) => {
-  res.locals.csrfToken = req.csrfToken ? req.csrfToken() : "";
-  next();
-});
+app.use(csrfToken());
 
 app.use("/", routes);
 
@@ -60,8 +60,7 @@ app.use((req, res) => {
   });
 });
 
-app.use((err, req, res, next) => {
-  console.error(err.stack);
+app.use((req, res) => {
   res.status(500).render("errors/error", {
     code: 500,
     title: "Server Error",
